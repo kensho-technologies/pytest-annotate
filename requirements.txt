@@ -1,0 +1,2 @@
+pyannotate==1.0.0
+pytest==3.2.5
