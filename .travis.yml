@@ -1,0 +1,15 @@
+sudo: false
+language: python
+cache: pip
+python:
+  - "2.7"
+  - "3.6"
+install:
+  - pip install -r dev-requirements.txt
+  - pip install -e .
+script:
+  - flake8 pytest_annotate/
+  - pydocstyle pytest_annotate/
+  - isort --check-only --verbose --recursive pytest_annotate/
+  - pylint pytest_annotate/
+  - bandit -r pytest_annotate/
