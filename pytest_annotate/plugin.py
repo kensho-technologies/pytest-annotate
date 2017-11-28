@@ -15,8 +15,8 @@ class PyAnnotatePlugin(object):
     def pytest_collection_finish(self, session):
         """Handle the pytest collection finish hook: configure pyannotate.
 
-        Explicitly delay importing `collect_types` all tests have been collected.  This gives
-        gevent a chance to monkey patch the world before importing pyannotate.
+        Explicitly delay importing `collect_types` until all tests have been collected. This
+        gives gevent a chance to monkey patch the world before importing pyannotate.
         """
         from pyannotate_runtime import collect_types  # noqa
         self.collect_types = collect_types
@@ -24,18 +24,15 @@ class PyAnnotatePlugin(object):
 
     def pytest_unconfigure(self, config):
         """Unconfigure the pytest plugin. Happens when pytest is about to exit."""
-        if self.collect_types:
-            self.collect_types.dump_stats(self.output_file)
+        self.collect_types.dump_stats(self.output_file)
 
     def pytest_runtest_call(self):
         """Handle the pytest hook event that a test is about to be run: start type collection."""
-        if self.collect_types:
-            self.collect_types.resume()
+        self.collect_types.resume()
 
     def pytest_runtest_teardown(self):
         """Handle the pytest test end hook event: stop type collection."""
-        if self.collect_types:
-            self.collect_types.pause()
+        self.collect_types.pause()
 
 
 def pytest_addoption(parser):
