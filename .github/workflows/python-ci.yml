@@ -1,0 +1,37 @@
+name: unit tests
+
+on:
+  push:
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [
+          "3.6",
+          "3.7",
+        ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+      - name: Install dependencies
+        run: |
+          pip install -r dev-requirements.txt
+          pip install -e .
+      - name: Run checkers(flake8 , pycodestyle, ...)
+        run: |
+          flake8 --statistics pytest_annotate
+          pydocstyle pytest_annotate/
+          isort --check-only --verbose --recursive pytest_annotate/
+          pylint pytest_annotate/
+          bandit -r pytest_annotate/
