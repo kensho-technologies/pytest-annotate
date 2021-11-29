@@ -2,6 +2,12 @@
 
 ## Current development version
 
+## v1.0.4
+
+- Added support for `pytest` version 6. [#10](https://github.com/kensho-technologies/pytest-annotate/pull/10)
+
+Thanks to `yuokada` for the contribution.
+
 ## v1.0.3
 
 - Enabled installation together with `pytest` versions 4 and 5. [#7](https://github.com/kensho-technologies/pytest-annotate/pull/7)
