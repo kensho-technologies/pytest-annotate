@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 package_name = 'pytest-annotate'
-version = '1.0.4'
+version = '1.0.5'
 
 setup(
     name=package_name,
