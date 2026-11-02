@@ -3,4 +3,4 @@ coveralls==1.5.1
 flake8==3.7.0
 isort==4.3.4
 pydocstyle==2.1.1
-pylint==2.11.1
+pylint==4.0.9
